@@ -224,6 +224,12 @@ export CEF_DEV_URL=http://localhost:1420
 
 The Rust binary remains unchanged; only the frontend swaps.
 
+## Testing
+
+- `tests/files-cors` contains a minimal Vite based web-app to test extra imported files. 
+  `bun install && bun run build` will output the built `dist` into `examples/files-cors` so you can run it using `cargo run --example files-cors`.
+
+
 ## 🚧 Current status
 
 ✅ Windowed Chromium app<br>

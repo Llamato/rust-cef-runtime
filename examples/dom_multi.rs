@@ -5,6 +5,6 @@ mod common {
 }
 
 fn main() {
-    let url = common::frontend::resolve("demo");
+    let url = common::frontend::resolve("dom-multi");
     Runtime::run(url);
 }

@@ -1,4 +1,4 @@
-# `rust-cef-runtime`: "Pure-GPU" HTML Runtime, minus the bullshit
+# "Pure-GPU" HTML Renderer, minus the bullsh*t
 
 A Rust-native Chromium runtime providing a high-performance foundation for GPU-accelerated desktop applications.
 
@@ -63,17 +63,17 @@ Using Chromium directly solves the rendering problem, but existing options have 
 | ---------------------------- | ------------------------------------------------ | -------------------------------- | ---------------- |
 | Rendering engine             | Chromium                                         | OS WebView                       | Chromium         |
 | GPU pipeline                 | Chromium                                         | OS-managed                       | Chromium         |
-| VSync control                | **Platform-dependent (uncapped on Linux)**       | OS-locked                        | OS-locked        |
-| High-FPS rendering           | **Yes (where platform allows)**                  | Limited                          | Limited          |
+| VSync control                | **Uncapped on Windows, Linux**                   | OS-locked                        | OS-locked        |
+| High-FPS rendering           | **Yes**                                          | Limited                          | Limited          |
 | Cross-platform consistency   | **Yes**                                          | No                               | Yes              |
 | Engine-level control         | **Complete**                                     | No                               | Partial          |
 | IPC model                    | **Native (CEF / Rust)**                          | JS <-> Rust                      | JS <-> Node      |
-| Binary size                  | Medium                                           | **Small**                        | Large            |
+| Binary size                  | Compact                                          | **Small**                        | Large            |
 | Runtime dependency           | **None**                                         | Tauri runtime                    | Electron runtime |
 | Sandbox control              | **Explicit**                                     | OS-defined                       | Limited          |
 | Linux GPU reliability        | **Excellent**                                    | VSync-locked (`WebViewGTK`)      | Good             |
 | macOS GPU control            | **Untested**                                     | OS-restricted                    | Good             |
-| Windows GPU stack            | DWM-composited                                   | **Best-in-class**                | DWM-composited   |
+| Windows GPU stack            | **Excellent**                                    | **Best-in-class**                | Great            |
 | Open source                  | Yes                                              | Yes                              | Yes              |
 | Opinionated framework        | No                                               | Yes                              | Yes              |
 
@@ -183,17 +183,36 @@ Run all build commands from a MSVC environment, then launch PowerShell from ther
 
 (CEF will refuse to start if **Ninja** is not available in environment.)
 
-> ⚠️ **Note:**  On Windows, all windowed apps are composited by the **Desktop Window Manager (DWM)**, which locks presentation to the monitor refresh rate. Tauri already solves this optimally via `WebView2`; this project focuses on CEF where deeper Chromium control is needed (Linux/macOS, engine-style embedding).
-
 ## Running the demo
 
 ```bash
 cargo run --example demo
 ```
 
-This launches a native window rendering `assets/index.html`.
+This launches a native window with GPU-rendered canvas demo for accurate benchmarks.
 
-For now, copy the `assets/` directory into `target/debug/examples`.
+### More demos! (not benchmarks)
+
+```bash
+cargo run --example dom_single
+cargo run --example dom_multi
+cargo run --example server
+```
+
+
+### Dev server override (any example)
+
+```bash
+export CEF_DEV_URL=http://localhost:1420
+cargo run --example demo
+```
+
+### Custom frontend path
+
+```bash
+export CEF_APP_PATH=/absolute/path/to/frontend
+cargo run --example demo
+```
 
 ## Development mode
 

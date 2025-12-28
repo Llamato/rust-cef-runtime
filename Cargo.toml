@@ -5,4 +5,4 @@ edition = "2021"
 
 [dependencies]
 # cef = { path = "../cef-rs/cef" }
-cef = { git = "https://github.com/tauri-apps/cef-rs" }
+cef = "143"
